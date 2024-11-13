@@ -146,9 +146,68 @@ europe = { 'spain': { 'capital':'madrid', 'population':46.77 },
 # Print out the capital of France
 print(europe['france']['capital'])
 ```
+## If ,elif, else
+### if
+```python
+if condition:
+    result1
+else ：
+    result2
+```
+### elif
 
-# Python Package: Numpy
-## Array
+```python
+if condition :
+    expression
+elif condition:
+    expression
+else:
+    expression
+```
+### Loop
+#### While loop
+While loop = repeated if condition
+>while condition :
+>--    expression
+
+#### For loop 
+
+Loop in ``List``
+>for var in seq:
+--    expression
+Example:
+```python
+for index, area in enumerate(areas) : # using index can return the index in the list
+    print('room '+ str(index) +':'+str(area))
+```
+Loop in ``Dictionary``
+``for key, value in dict.items() :``
+
+
+Loop in ``2D Array``
+```python
+np_height = np.array([1.73, 1.68, 1.71, 1.89, 1.79])
+np_weight = np.array([65.4, 59.2, 63.6, 88.4, 68.7])
+meas = np.array([np_height, np_weight])
+
+for val in np.nditer(meas):
+    expression
+```
+Loop in ``DataFrame``
+```python
+# Iterate over rows of cars
+for row in cars: # simply return the row name itself
+    print(row)
+#Using dict.iterrows()
+for lab , row in cars.iterrows():# return the row as series, making it easy to access columns by name 
+#i.e:
+for lab,row in cars.iterrows():
+    cars.loc[lab, "COUNTRY"] = row["country"].upper() # Add column to capitalize country name
+```
+
+
+## Python Package: Numpy
+### Array
 First of all, numpy arrays cannot contain elements with different types. Second, the typical arithmetic operators, such as +, -, * and / have a different meaning for regular Python lists and numpy arrays.
 
 ``True`` is converted to 1, ``False`` is converted to 0.
@@ -161,14 +220,17 @@ np_height = np.array(height)
 np_weight = np.array(weight)
 np_weight / np_height ** 2
 ```
-2. Calculation in Numpy Array
+2. Calculation between Numpy Array
 ```python
 python_list = [1, 2, 3]
 numpy_array = np.array([1, 2, 3])
 python_list + python_list # output [1,2,3,1,2,3]
 numpy_array + numpy_array # output: [2,4,6]
-### Slice Numpy Array
+
+np.mean(array > = 60) #calculate all the num in array >=60 and divided by count of num
 ```
+
+
 3. Slicing in Numpy Array
 ```python
 # Print out the 50th row of np_baseball
@@ -180,6 +242,27 @@ np_weight_lb = np_baseball[:,1]
 # Print out height of 124th player
 print(np_baseball[123][0])
 ```
+
+### Boolean operators with NumPy
+Numpy array can do comparison of an array:
+```python
+bmi = [ 21.852, 20.975, 21.75 , 24.747, 21.441]
+bmi > 23 # Output array([False, False, False, True, False], dtype=bool)
+bmi[bmi > 23] # Output array([ 24.747])
+```
+Numpy array can not take multiple comparison
+```python
+bmi > 21 and bmi < 22 # Error
+```
+
+The way to do multi comparison is through logical
+``logical_and()``
+``logical_or()``
+``logical_not()``
+
+```python
+np.logical_and(bmi > 21, bmi < 22) # Output array([True, False, True, False, True], dtype=bool)
+```
 ### Comparison of Dictionary, Array and List
 |Feature|List|Dictionary|Array|
 |---|---|---|---|
@@ -187,9 +270,19 @@ print(np_baseball[123][0])
 ||my_list = [1, 2, 3]|my_dict = {'a': 1, 'b': 2}	|my_array = array('i', [1, 2, 3])|
 |Element Access	By index:| my_list[0]|By key: my_dict['a']|By index: my_array[0]
 |Homogeneity|No (can contain elements of different data types).	|No (keys must be unique and immutable types; values can be any type).	|Yes (all elements must be of the same type).
+
+### Random in Numpy
+Use random seed
+``np.random.seed()``
+Generate random number
+``np.random.rand()``
+``np.random.rand(start_num,end_num)``
+Generate integer
+``print(np.random.randint(1,7))``
+
 ### Data explore in Numpy array
 
- # Python Package: Matplotlib
+## Python Package: Matplotlib
 ### Line Plot
  ```python
 # Import matplotlib.pyplot as plt
@@ -225,8 +318,8 @@ plt.text(5700, 80, 'China')
 # Display grid in plot
 plt.grid(True)
 ```
-# Python Package Pandas
-## import Pandas as pd
+## Python Package Pandas
+### import Pandas as pd
 ```python
 # Turn dict into dataframe
 cars = pd.DataFrame(cars_dict)
@@ -236,7 +329,7 @@ df.index = list1
 df1 = pd.read_csv("path/to/brics.csv")
 cars = pd.read_csv('cars.csv',index_col = 0)#set index to 0
 ```
-## Read data from dataframe
+### Read data from dataframe
 ```python
 # return column as Pandas Series
 pd['column']
@@ -245,7 +338,7 @@ pd[['column']]
 # Print out first 3 observations
 print(cars[0:3])
 ```
-## ``loc`` and ``iloc``
+### ``loc`` and ``iloc``
 With ``loc`` and ``iloc`` you can do practically any data selection operation on DataFrames you can think of. 
 ``loc`` is label-based
 ``iloc`` is integer index based
@@ -257,9 +350,84 @@ print(cars.loc[['AUS','EG']])
 print(cars.loc[['RU','MOR'],['country','drives_right']])
 
 ```
+### Data Calculation in Pandas
+1. Simple calculation on a column/row
+```python
+# Sum of each column
+column_sum = df.sum()
+# Sum of each row
+row_sum = df.sum(axis=1)
+# Mean of each column
+column_mean = df.mean()
+# Median of each column
+column_median = df.median()
+# Minimum of each column
+column_min = df.min()
+# Descriptive statistics
+desc_stats = df.describe()
+```
+2. Count in DataFrame: ``Null``? ``Non-null``?``Unique``?
+```python
+# Count in column (unique & not Null)
+desc_stats = df.value_counts()
+# Count in column (duplicate & not Null)
+desc_stats = df.count()
+#Unique & Null
+df['col'].value_counts(dropna=False)
+#duplicate & Null rows
+len(df['col'])
+# Shape
+df['col'].shape # returns (3, 3), indicating 3 rows and 3 columns.
+df['col'].shape[0] #this is a method , return number of rows
+df['col'].shape[1] #return number of columns
+```
+3. ``Group By`` a Single Column
+```python
+# Group by 'Department' and calculate mean salary
+grouped_mean = df.groupby('Department')['Salary'].mean()
+# Group by 'Department' and calculate sum and mean salary
+grouped_stats = df.groupby('Department')['Salary'].agg(['sum', 'mean'])
+```
+4. Create ``pivot`` table
+
+```python
+# Creating a pivot table
+pivot = pd.pivot_table(
+    df, 
+    values='Revenue', 
+    index='Date', 
+    columns='Department', 
+    aggfunc='sum')
+```
 
 
-# Data Explore
+### Data filtering in Pandas
+Since ``df['column']`` return the result as ``Series``
+One way of filtering the data is using a boolean series:
+
+```python
+df['column'] = condition # Output a series of ['true','false',...]
+con = (df['column']= condition)
+result = df[con] # return the data with this condition
+#i.e:
+np.logical_and(brics["area"] > 8, brics["area"] < 10)
+brics[np.logical_and(brics["area"] > 8, brics["area"] < 10)]
+```
+Apply multiple condition to a DataFrame:
+
+```python
+movie_short = netflix_df
+[
+    (netflix_df['type'] == 'Movie')
+    &(netflix_df['genre'] == 'Action')
+    & (netflix_df['release_year'] >= 1990) 
+    & (netflix_df['release_year'] < 2000)
+    &(netflix_df['duration'] <=90)
+]
+```
+
+
+## Data Explore
 ```python
 np.mean(np_city[:, 0])
 np.median(np_city[:, 0])
