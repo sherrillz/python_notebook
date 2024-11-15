@@ -350,7 +350,7 @@ print(cars.loc[['AUS','EG']])
 print(cars.loc[['RU','MOR'],['country','drives_right']])
 
 ```
-### Data Calculation in Pandas
+### Calculating in Pandas
 1. Simple calculation on a column/row
 ```python
 # Sum of each column
@@ -370,6 +370,7 @@ desc_stats = df.describe()
 ```python
 # Count in column (unique & not Null)
 desc_stats = df.value_counts()
+store_props = store_types['type'].value_counts(normalize=True) #transfer count to proportion
 # Count in column (duplicate & not Null)
 desc_stats = df.count()
 #Unique & Null
