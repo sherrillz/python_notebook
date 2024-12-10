@@ -279,6 +279,7 @@ Generate random number
 ``np.random.rand(start_num,end_num)``
 Generate integer
 ``print(np.random.randint(1,7))``
+[See detailed np random note here.](https://github.com/sherrillz/python_notebook/blob/main/06_Sampling_Data/sampling%20data.ipynb)
 
 ### Data explore in Numpy array
 
